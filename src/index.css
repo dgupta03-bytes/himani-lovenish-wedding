@@ -1,0 +1,207 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-ivory: #fbf6ec;
+  --color-cream: #f4ebd9;
+  --color-champagne: #e8d5b0;
+  --color-gold: #b8893b;
+  --color-gold-light: #d9b970;
+  --color-gold-pale: #efdcae;
+  --color-maroon: #6e1423;
+  --color-maroon-deep: #430b16;
+  --color-sage: #5e6b4e;
+  --color-blush: #ecd3cb;
+  --color-ink: #2a1e17;
+  --color-ink-soft: #5a4636;
+  --color-night: #0b1029;
+  --color-night-2: #1a1f47;
+
+  --font-serif: 'Cormorant Garamond', 'Times New Roman', serif;
+  --font-display: 'Cinzel', 'Cormorant Garamond', serif;
+  --font-script: 'Great Vibes', cursive;
+  --font-deva: 'Tiro Devanagari Hindi', serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-ivory text-ink font-serif antialiased;
+    font-size: 18px;
+    overflow-x: hidden;
+  }
+  body.locked {
+    overflow: hidden;
+  }
+  ::selection {
+    background: var(--color-gold-pale);
+    color: var(--color-maroon-deep);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  img {
+    max-width: 100%;
+  }
+}
+
+/* Subtle handmade-paper grain */
+.paper {
+  background-color: var(--color-ivory);
+  background-image:
+    radial-gradient(rgba(184, 137, 59, 0.07) 1px, transparent 1px),
+    radial-gradient(rgba(110, 20, 35, 0.035) 1px, transparent 1px),
+    radial-gradient(ellipse at 20% 0%, rgba(232, 213, 176, 0.45), transparent 60%),
+    radial-gradient(ellipse at 90% 100%, rgba(236, 211, 203, 0.4), transparent 55%);
+  background-size: 22px 22px, 13px 13px, 100% 100%, 100% 100%;
+  background-position: 0 0, 7px 9px, 0 0, 0 0;
+}
+
+.gold-text {
+  background: linear-gradient(100deg, #8a6424 0%, #d9b970 30%, #f6e7bf 48%, #c9973f 66%, #8a6424 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.gold-shimmer {
+  animation: shimmer 6s linear infinite;
+}
+@keyframes shimmer {
+  to { background-position: -200% center; }
+}
+
+.gold-border {
+  border: 1px solid rgba(184, 137, 59, 0.55);
+  box-shadow: inset 0 0 0 5px var(--card-bg, #fbf6ec), inset 0 0 0 6px rgba(184, 137, 59, 0.45);
+}
+
+.card-shadow {
+  box-shadow:
+    0 1px 2px rgba(67, 11, 22, 0.06),
+    0 12px 28px -10px rgba(67, 11, 22, 0.22),
+    0 40px 80px -30px rgba(67, 11, 22, 0.28);
+}
+
+/* Floating card on the opening screen */
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(-0.4deg); }
+  50% { transform: translateY(-10px) rotate(0.4deg); }
+}
+.animate-float { animation: float 5.5s ease-in-out infinite; }
+
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+.animate-spin-slow { animation: spin-slow 90s linear infinite; }
+.animate-spin-slower { animation: spin-slow 160s linear infinite reverse; }
+
+/* Falling petals */
+@keyframes petal-fall {
+  0% { transform: translate3d(0, -10vh, 0) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.9; }
+  90% { opacity: 0.8; }
+  100% { transform: translate3d(var(--drift, 60px), 110vh, 0) rotate(var(--spin, 540deg)); opacity: 0; }
+}
+.petal {
+  position: absolute;
+  top: 0;
+  animation: petal-fall var(--dur, 16s) linear var(--delay, 0s) infinite;
+  will-change: transform;
+}
+
+/* Twinkling stars */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.25; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1); }
+}
+.star {
+  position: absolute;
+  border-radius: 9999px;
+  background: #fff8e1;
+  box-shadow: 0 0 6px rgba(255, 240, 200, 0.9);
+  animation: twinkle var(--dur, 3s) ease-in-out var(--delay, 0s) infinite;
+}
+
+/* Rising golden embers */
+@keyframes ember {
+  0% { transform: translate3d(0, 0, 0); opacity: 0; }
+  15% { opacity: 1; }
+  100% { transform: translate3d(var(--drift, 20px), -70vh, 0); opacity: 0; }
+}
+.ember {
+  position: absolute;
+  bottom: -10px;
+  border-radius: 9999px;
+  background: radial-gradient(circle, #fff3c4 0%, #d9b970 45%, transparent 70%);
+  animation: ember var(--dur, 9s) ease-out var(--delay, 0s) infinite;
+}
+
+/* Scratch dust */
+@keyframes dust {
+  to { transform: translate(var(--dx), var(--dy)) scale(0.2); opacity: 0; }
+}
+.dust {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 9999px;
+  background: #d9b970;
+  pointer-events: none;
+  animation: dust 0.7s ease-out forwards;
+}
+
+/* Fabric textures for the dress-code mood board */
+.fabric-bandhani {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.75) 1.6px, transparent 2.4px), radial-gradient(circle, rgba(255, 255, 255, 0.45) 1.2px, transparent 2px);
+  background-size: 14px 14px, 14px 14px;
+  background-position: 0 0, 7px 7px;
+}
+.fabric-leheriya {
+  background-image: repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.28) 0 6px, transparent 6px 16px, rgba(255, 255, 255, 0.14) 16px 19px, transparent 19px 28px);
+}
+.fabric-brocade {
+  background-image: radial-gradient(circle at 50% 50%, rgba(246, 231, 191, 0.5) 0 2px, transparent 3px), repeating-linear-gradient(45deg, rgba(246, 231, 191, 0.18) 0 1px, transparent 1px 12px), repeating-linear-gradient(-45deg, rgba(246, 231, 191, 0.18) 0 1px, transparent 1px 12px);
+  background-size: 17px 17px, auto, auto;
+}
+.fabric-floral {
+  background-image: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.55) 0 3px, transparent 4px), radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.35) 0 5px, transparent 6px);
+  background-size: 26px 26px;
+}
+.fabric-zari {
+  background-image: repeating-linear-gradient(90deg, rgba(217, 185, 112, 0.35) 0 1px, transparent 1px 9px), repeating-linear-gradient(0deg, rgba(217, 185, 112, 0.2) 0 1px, transparent 1px 9px);
+}
+.fabric-jaali {
+  background-image: radial-gradient(circle at 50% 50%, transparent 7px, rgba(246, 231, 191, 0.35) 7.5px, rgba(246, 231, 191, 0.35) 8.5px, transparent 9px);
+  background-size: 18px 18px;
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .animate-float,
+  .animate-spin-slow,
+  .animate-spin-slower,
+  .gold-shimmer,
+  .star,
+  .ember,
+  .petal { animation: none !important; }
+  .petal, .ember { display: none; }
+}
+
+/* Cartoon couple walking (src/lib/cartoon.js) */
+.ct-leg { transform-box: fill-box; transform-origin: 50% 0; }
+.ct-skirt { transform-box: fill-box; transform-origin: 50% 0; }
+.ct-walking .ct-leg-a { animation: ct-step 0.5s ease-in-out infinite alternate; }
+.ct-walking .ct-leg-b { animation: ct-step 0.5s ease-in-out infinite alternate-reverse; }
+.ct-walking .ct-skirt { animation: ct-sway 0.5s ease-in-out infinite alternate; }
+@keyframes ct-step { from { transform: rotate(-16deg); } to { transform: rotate(16deg); } }
+@keyframes ct-sway { from { transform: rotate(-3deg); } to { transform: rotate(3deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .ct-walking .ct-leg-a, .ct-walking .ct-leg-b, .ct-walking .ct-skirt { animation: none; }
+}
