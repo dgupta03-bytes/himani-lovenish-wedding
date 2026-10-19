@@ -7,15 +7,13 @@ import Countdown from './components/Countdown'
 import ScratchCard from './components/ScratchCard'
 import OurStory from './components/OurStory'
 import WeddingCelebrations from './components/WeddingCelebrations'
-import DressCode from './components/DressCode'
 import Venue from './components/Venue'
-import Gallery from './components/Gallery'
 import FromOurInvitation from './components/FromOurInvitation'
-import FinalInvitation from './components/FinalInvitation'
 import MusicToggle from './components/MusicToggle'
 import CursorGlow from './components/CursorGlow'
 import { FloatingPetals } from './components/Decor'
 import { music } from './lib/music'
+import weddingData from './data/weddingData'
 
 export default function App() {
   const [intro, setIntro] = useState(true) // doors/curtains overlay is showing
@@ -31,6 +29,8 @@ export default function App() {
   useEffect(() => {
     music.preload()
     music.play()
+    // Fetch the hero portrait during the intro so it's ready when the curtains part
+    if (weddingData.couplePhoto) new Image().src = weddingData.couplePhoto
   }, [])
 
   const reveal = () => {
@@ -50,13 +50,10 @@ export default function App() {
             <Hero />
             <ScratchCard />
             <Countdown />
-            <OurStory />
             <WeddingCelebrations />
-            <DressCode />
             <Venue />
-            <Gallery />
+            <OurStory />
             <FromOurInvitation />
-            <FinalInvitation />
           </main>
           <MusicToggle />
           <CursorGlow />

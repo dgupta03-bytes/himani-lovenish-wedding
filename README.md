@@ -1,4 +1,4 @@
-# Himani & Lovenish — Wedding Invitation
+# Lovenish & Himani — Wedding Invitation
 
 An interactive digital wedding card built with React, Vite, Tailwind CSS v4 and Framer Motion.
 
@@ -20,17 +20,15 @@ Almost everything lives in **`src/data/weddingData.js`**.
 | Bride / groom names | `bride`, `groom`, `brideShort`, `groomShort` |
 | Wedding dates | `weddingDates` (`display` is the text shown), `days[]` for the day headings |
 | Countdown target | `countdownTo` (ISO time with `+05:30` for IST) |
-| Event names, times, descriptions, icons | `events[]` (`day: 1 \| 2`; `feature: 'varmala' \| 'doli'` gives an event its own cinematic section) |
-| Dress codes | `dressCode[]` (`attire`, colour `swatches`, fabric `pattern`) and `dressCodeNote` |
+| Event names, times, descriptions, icons, dress codes | `events[]` (`day: 1 \| 2`; `feature: 'varmala' \| 'doli'` gives an event its own cinematic section; `dressCode: { attire, swatches }` shows on the event's card) |
 | Our Story text & photos | `story[]` |
 | Venue address | `venue.address` |
 | Google Maps | `venue.mapsUrl` (Get Directions) and `venue.mapsEmbedUrl` (embedded map). Both fall back to a search for the venue name + city. |
 | Venue photo | `venue.image` |
-| Gallery photos | Put images in `public/images/` and list them in `gallery[]` with their `width`/`height` |
 | Printed invitation | Put the scan in `public/images/` and set `invitationImage: '/images/invitation.jpg'` to show the "From Our Invitation" section |
-| Music | `music.src` → `public/music/liggi.m4a` (a 128 kbps copy of `liggi.mp3`). It starts on the guest's "Tap to open", or right away if the browser allows autoplay. |
+| Music | `music.src` → `public/music/jashn-e-bahaaraa.m4a` (Jashn-E-Bahaaraa, 128 kbps AAC). It starts on the guest's "Tap to open", or right away if the browser allows autoplay. |
 | Opening animation | `src/components/DoorsIntro.jsx` (doors, seal, curtains; speeds in `T`) and `src/components/Courtyard.jsx` (the courtyard scene with the cartoon couple) |
-| Closing message | `closing` |
+| Couple portrait | `couplePhoto` → `public/images/couple.jpg`, shown as a 3D tilting card at the top of the main page (`src/components/CoupleCard3D.jsx`) |
 
 Other things:
 - **Social preview (WhatsApp):** `public/og-image.png` (1200×630). The title, description and OG tags are in `index.html`. After deploying, change `og:image` to the full URL (e.g. `https://your-site.vercel.app/og-image.png`), because WhatsApp needs an absolute link.

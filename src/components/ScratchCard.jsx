@@ -183,7 +183,7 @@ export default function ScratchCard() {
           {/* Hidden content */}
           <div className="gold-border paper absolute inset-0 flex flex-col items-center justify-center rounded-2xl p-6 text-center">
             <Corners className="h-10 w-10 text-gold sm:h-12 sm:w-12" inset="inset-3" />
-            <Ganesha className="h-10 w-10 text-gold" />
+            <Ganesha className="h-14 w-14" />
             <p className="mt-2 font-display text-xs tracking-[0.45em] text-gold uppercase">{scratchCard.title}</p>
             <p className="mt-3 font-script text-[clamp(2rem,9vw,2.9rem)] leading-tight text-maroon">{weddingDates.display}</p>
             <div className="mt-2 flex items-center gap-2 text-ink-soft">

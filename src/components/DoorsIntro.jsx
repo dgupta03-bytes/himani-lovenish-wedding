@@ -256,7 +256,7 @@ export default function DoorsIntro({ onReveal, onDone }) {
         type="button"
         onClick={start}
         disabled={open}
-        aria-label={`Tap to open the wedding invitation of ${weddingData.bride} and ${weddingData.groom}`}
+        aria-label={`Tap to open the wedding invitation of ${weddingData.groom} and ${weddingData.bride}`}
         className="absolute inset-0 block cursor-pointer"
         style={{ perspective: 1600, pointerEvents: open ? 'none' : 'auto' }}
       >

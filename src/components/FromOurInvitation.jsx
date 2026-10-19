@@ -10,7 +10,7 @@ export default function FromOurInvitation() {
       <SectionHeading id="invitation-title" eyebrow="Keepsake" title="From Our Invitation" />
       <Reveal className="mx-auto mt-14 max-w-2xl">
         <a href={src} target="_blank" rel="noopener noreferrer" className="block">
-          <img src={src} alt="The printed wedding invitation of Himani and Lovenish" loading="lazy" className="card-shadow w-full rounded-md" />
+          <img src={src} alt="The printed wedding invitation of Lovenish and Himani" loading="lazy" className="card-shadow w-full rounded-md" />
         </a>
         <p className="mt-4 text-center text-sm italic text-ink-soft">Tap to view full size</p>
       </Reveal>

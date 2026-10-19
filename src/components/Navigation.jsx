@@ -7,11 +7,9 @@ import { ease } from './Decor'
 
 const LINKS = [
   { id: 'home', label: 'Home' },
-  { id: 'story', label: 'Our Story' },
   { id: 'celebrations', label: 'Celebrations' },
-  { id: 'dresscode', label: 'Dress Code' },
   { id: 'venue', label: 'Venue' },
-  { id: 'gallery', label: 'Gallery' },
+  { id: 'story', label: 'Our Story' },
 ]
 
 export default function Navigation() {
@@ -69,8 +67,8 @@ export default function Navigation() {
             scrolled ? 'border border-gold/30 bg-ivory/85 shadow-[0_8px_30px_-12px_rgba(67,11,22,0.35)] backdrop-blur-md' : 'border border-transparent'
           }`}
         >
-          <a href="#home" onClick={go('home')} className="font-script text-2xl text-maroon md:hidden" aria-label="Back to top">
-            H <span className="text-gold">&amp;</span> L
+          <a href="#home" onClick={go('home')} className="md:hidden" aria-label="Back to top">
+            <img src="/images/logo.webp" alt="" width="360" height="290" className="h-11 w-auto" />
           </a>
           <ul className="hidden items-center md:flex">
             {LINKS.map((l) => (
@@ -128,7 +126,7 @@ export default function Navigation() {
               <X className="h-5 w-5" />
             </button>
             <p className="relative font-script text-4xl text-maroon">
-              {weddingData.brideShort} <span className="text-gold">&amp;</span> {weddingData.groomShort}
+              {weddingData.groomShort} <span className="text-gold">&amp;</span> {weddingData.brideShort}
             </p>
             <ul className="relative mt-10 space-y-2 text-center">
               {LINKS.map((l, i) => (

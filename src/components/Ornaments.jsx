@@ -1,39 +1,8 @@
 /* Hand-drawn SVG motifs inspired by traditional Indian wedding cards. */
 
+/** Lord Ganesha (public/images/ganesh.webp, background removed from Ganesh.jpeg). */
 export function Ganesha({ className = '', title = 'Lord Ganesha' }) {
-  return (
-    <svg viewBox="0 0 100 100" className={className} role="img" aria-label={title} fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-      {/* halo */}
-      <circle cx="50" cy="40" r="30" strokeWidth="0.8" opacity="0.45" />
-      <circle cx="50" cy="40" r="33" strokeWidth="0.5" strokeDasharray="1 3" opacity="0.6" />
-      {/* crown */}
-      <path d="M37 31 L40 20 L45 25 L50 11 L55 25 L60 20 L63 31 Z" fill="currentColor" fillOpacity="0.15" />
-      <circle cx="50" cy="9" r="1.6" fill="currentColor" />
-      <path d="M38 31 H62" />
-      {/* ears */}
-      <path d="M38 35 C24 27 13 38 17 51 C20 61 31 61 38 53" fill="currentColor" fillOpacity="0.1" />
-      <path d="M62 35 C76 27 87 38 83 51 C80 61 69 61 62 53" fill="currentColor" fillOpacity="0.1" />
-      <path d="M24 42 C22 47 24 52 29 54" opacity="0.6" />
-      <path d="M76 42 C78 47 76 52 71 54" opacity="0.6" />
-      {/* head */}
-      <path d="M38 33 C36 44 39 52 46 55 M62 33 C64 44 61 52 54 55" />
-      {/* tilak + eyes */}
-      <path d="M50 33 V38" strokeWidth="2" />
-      <path d="M43 41 Q45 39.5 47 41 M53 41 Q55 39.5 57 41" />
-      {/* tusk */}
-      <path d="M45 55 Q41 59 42 62" />
-      {/* trunk curling right */}
-      <path d="M46 55 C45 64 43 72 49 78 C54 82 61 79 60 73 C59 69 55 69 54 72" />
-      <path d="M54 55 C54 62 53 66 55 69" />
-      {/* body */}
-      <path d="M38 58 C30 68 31 84 44 88 M62 58 C70 68 69 84 56 88" />
-      <circle cx="68" cy="73" r="3.2" fill="currentColor" fillOpacity="0.25" />
-      {/* lotus seat */}
-      <path d="M26 92 Q38 84 50 92 Q62 84 74 92" />
-      <path d="M32 92 Q41 87 50 92 Q59 87 68 92" opacity="0.6" />
-      <path d="M22 95 H78" strokeWidth="1" />
-    </svg>
-  )
+  return <img src="/images/ganesh.webp" alt={title} width="360" height="484" className={`object-contain ${className}`} />
 }
 
 export function Kalash({ className = '', title = 'Kalash' }) {

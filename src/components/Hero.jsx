@@ -3,6 +3,7 @@ import { ChevronDown, MapPin } from 'lucide-react'
 import weddingData from '../data/weddingData'
 import { ArchFrame, Divider, Ganesha, Mandala, Marigold, PalaceSilhouette, Swastik } from './Ornaments'
 import { ease } from './Decor'
+import CoupleCard3D from './CoupleCard3D'
 
 // Mobile strands sit between the logo and menu button; desktop strands flank the centred nav.
 const GARLANDS = [
@@ -24,7 +25,7 @@ const rise = (delay) => ({
 })
 
 export default function Hero() {
-  const { bride, groom, blessing, location } = weddingData
+  const { bride, groom, blessing, location, couplePhoto } = weddingData
   const { scrollY } = useScroll()
   const mandalaY = useTransform(scrollY, [0, 800], [0, 160])
   const contentY = useTransform(scrollY, [0, 800], [0, -60])
@@ -55,51 +56,59 @@ export default function Hero() {
         ))}
       </div>
 
-      <motion.div style={{ y: contentY }} className="relative w-full max-w-xl text-center">
-        {/* Jharokha arch framing the names */}
-        <motion.div
-          className="pointer-events-none absolute -inset-x-2 -top-10 -bottom-8 text-gold/60 sm:-inset-x-10"
-          initial={{ opacity: 0, scale: 0.94 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.6, ease }}
-          aria-hidden="true"
-        >
-          <ArchFrame className="h-full w-full" />
+      <div className={`relative grid w-full items-center ${couplePhoto ? 'mt-4 max-w-6xl gap-14 lg:mt-0 lg:grid-cols-2 lg:gap-10' : 'max-w-xl'}`}>
+        <motion.div style={{ y: contentY }} className="relative mx-auto w-full max-w-xl text-center">
+          {/* Jharokha arch framing the names */}
+          <motion.div
+            className="pointer-events-none absolute -inset-x-2 -top-10 -bottom-8 text-gold/60 sm:-inset-x-10"
+            initial={{ opacity: 0, scale: 0.94 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.6, ease }}
+            aria-hidden="true"
+          >
+            <ArchFrame className="h-full w-full" />
+          </motion.div>
+
+          <motion.div {...rise(0.2)} className="flex flex-col items-center">
+            <Ganesha className="h-24 w-24 sm:h-28 sm:w-28" />
+            <div className="mt-2 flex items-center gap-3 text-maroon">
+              <Swastik className="h-4 w-4 text-gold" />
+              <span className="font-deva text-lg">{blessing}</span>
+              <Swastik className="h-4 w-4 text-gold" />
+            </div>
+          </motion.div>
+
+          <h1 className="mt-8 sm:mt-10">
+            <motion.span {...rise(0.45)} className="block font-script text-[clamp(3.2rem,13vw,6.5rem)] leading-[1.02] text-maroon">
+              {groom}
+            </motion.span>
+            <motion.span {...rise(0.65)} className="block font-script text-[clamp(2.4rem,9vw,4.2rem)] leading-none gold-text gold-shimmer">
+              &amp;
+            </motion.span>
+            <motion.span {...rise(0.85)} className="block font-script text-[clamp(3.2rem,13vw,6.5rem)] leading-[1.02] text-maroon">
+              {bride}
+            </motion.span>
+          </h1>
+
+          <motion.p {...rise(1.1)} className="mt-7 font-display text-sm tracking-[0.45em] text-gold uppercase sm:text-base">
+            We’re Getting Married
+          </motion.p>
+
+          <motion.div {...rise(1.25)} className="mt-6">
+            <Divider />
+          </motion.div>
+
+          <motion.p {...rise(1.5)} className="mt-3 inline-flex items-center gap-2 text-lg italic text-ink-soft">
+            <MapPin className="h-4 w-4 text-gold" aria-hidden="true" /> {location}
+          </motion.p>
         </motion.div>
 
-        <motion.div {...rise(0.2)} className="flex flex-col items-center">
-          <Ganesha className="h-16 w-16 text-gold sm:h-20 sm:w-20" />
-          <div className="mt-2 flex items-center gap-3 text-maroon">
-            <Swastik className="h-4 w-4 text-gold" />
-            <span className="font-deva text-lg">{blessing}</span>
-            <Swastik className="h-4 w-4 text-gold" />
+        {couplePhoto && (
+          <div>
+            <CoupleCard3D delay={0.3} />
           </div>
-        </motion.div>
-
-        <h1 className="mt-8 sm:mt-10">
-          <motion.span {...rise(0.45)} className="block font-script text-[clamp(3.2rem,13vw,6.5rem)] leading-[1.02] text-maroon">
-            {bride}
-          </motion.span>
-          <motion.span {...rise(0.65)} className="block font-script text-[clamp(2.4rem,9vw,4.2rem)] leading-none gold-text gold-shimmer">
-            &amp;
-          </motion.span>
-          <motion.span {...rise(0.85)} className="block font-script text-[clamp(3.2rem,13vw,6.5rem)] leading-[1.02] text-maroon">
-            {groom}
-          </motion.span>
-        </h1>
-
-        <motion.p {...rise(1.1)} className="mt-7 font-display text-sm tracking-[0.45em] text-gold uppercase sm:text-base">
-          We’re Getting Married
-        </motion.p>
-
-        <motion.div {...rise(1.25)} className="mt-6">
-          <Divider />
-        </motion.div>
-
-        <motion.p {...rise(1.5)} className="mt-3 inline-flex items-center gap-2 text-lg italic text-ink-soft">
-          <MapPin className="h-4 w-4 text-gold" aria-hidden="true" /> {location}
-        </motion.p>
-      </motion.div>
+        )}
+      </div>
 
       <motion.a
         href="#surprise"

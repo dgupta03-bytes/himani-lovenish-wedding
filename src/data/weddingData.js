@@ -1,14 +1,14 @@
 /**
  * ─────────────────────────────────────────────────────────────
  *  CENTRAL WEDDING CONFIGURATION
- *  Every name, date, time, venue, dress code, photo and story
+ *  Every name, date, time, venue, dress code and story
  *  shown on the website comes from this one file.
  * ─────────────────────────────────────────────────────────────
  */
 
 const weddingData = {
-  bride: 'Himani Gupta',
-  groom: 'Lovenish Gupta',
+  bride: 'Himani',
+  groom: 'Lovenish',
   brideShort: 'Himani',
   groomShort: 'Lovenish',
 
@@ -56,6 +56,7 @@ const weddingData = {
 
   // `icon` picks an illustration from components/EventIcons.jsx
   // `feature` gives an event its own cinematic section: 'varmala' | 'doli'
+  // `dressCode` (optional) is highlighted on the event's card: attire text + colour swatches
   events: [
     {
       name: 'Godh Bharai',
@@ -95,6 +96,7 @@ const weddingData = {
       date: '26 November 2026',
       time: '11:00 AM',
       icon: 'haldi',
+      dressCode: { attire: 'Lavender & Pink', swatches: ['#B9A5D6', '#F4A6C1', '#D9CBEE', '#F9D3E0'] },
       description: 'Turmeric, marigolds and laughter on a bright golden morning.',
     },
     {
@@ -133,59 +135,50 @@ const weddingData = {
     },
   ],
 
-  // ── DRESS CODE (placeholders — edit freely) ──────────────────
-  // `swatches` are the colours shown on each mood-board card.
-  // `pattern` picks a fabric texture: 'bandhani' | 'leheriya' | 'brocade' | 'floral' | 'jaali' | 'zari'
-  dressCodeNote: 'Suggested looks — final dress codes will be shared closer to the date.',
-  dressCode: [
-    { event: 'Godh Bharai', attire: 'Pastels / Elegant Indian', swatches: ['#F3D9D3', '#E8E1C8', '#CFE0D2'], pattern: 'floral' },
-    { event: 'Lagan Tika', attire: 'Traditional Indian', swatches: ['#8C1C2B', '#C9973F', '#F2E6CC'], pattern: 'brocade' },
-    { event: 'Sangeet & Engagement', attire: 'Festive Glam', swatches: ['#2B2347', '#B8893B', '#9E3B5B'], pattern: 'zari' },
-    { event: 'Haldi', attire: 'Lavender', swatches: ['#B9A5D6', '#E6DDF2', '#8E7AB5'], pattern: 'bandhani' },
-    { event: 'Barat', attire: 'Traditional Indian', swatches: ['#B23A48', '#E3A857', '#5E6B4E'], pattern: 'leheriya' },
-    { event: 'Varmala', attire: 'Wedding Elegance', swatches: ['#6E1423', '#D9B970', '#FBF6EC'], pattern: 'jaali' },
-  ],
-
-  // ── OUR STORY (placeholders — replace with your own words/photos) ──
+  // ── OUR STORY ──────────────────────────────────────────────
+  // width/height are the photo's proportions (portrait photos are shown a little cropped).
   story: [
     {
-      title: 'Where It All Began',
-      date: 'Once upon a time',
-      text: 'Every love story has a beginning. Ours started with a simple hello that neither of us knew would change everything.',
-      image: '/images/story-1.svg',
+      title: 'A Little Hello',
+      date: 'Where it all began',
+      text: 'It all started with a little hello and a few unexpected conversations. little did we know, those ordinary moments would lead us to something so special — a love story of our own. 🤍✨',
+      image: '/images/story-1.jpg',
+      width: 1599,
+      height: 899,
     },
     {
-      title: 'The Journey',
-      date: 'Along the way',
-      text: 'Through conversations, laughter and shared dreams, two lives slowly became one beautiful journey.',
-      image: '/images/story-2.svg',
+      title: 'A New Year',
+      date: 'A little closer',
+      text: 'We already knew each other, but that new year brought us a little closer. little did we know, we’d look back at those moments someday and smile at how our story began. ❤️',
+      image: '/images/story-2.jpg',
+      width: 900,
+      height: 1600,
     },
     {
-      title: 'The Moment',
-      date: 'The question',
-      text: 'With our families’ blessings, a promise was made — and our hearts already knew the answer.',
-      image: '/images/story-3.svg',
+      title: 'Kasol',
+      date: 'Just us being us',
+      text: 'Kasol, so many little memories, endless laughter, and just us being us. 🥹 looking back at these pictures makes me miss those days a little extra. if I could go back, I’d do it all over again, as long as it’s with you. 💙🏔️',
+      image: '/images/story-3.jpg',
+      width: 900,
+      height: 1600,
     },
     {
-      title: 'Forever Begins',
-      date: 'November 2026',
-      text: 'In the Pink City, surrounded by everyone we love, we begin our forever. We would love for you to be there.',
-      image: '/images/story-4.svg',
+      title: 'Sushi Dates',
+      date: 'Forever, figured out',
+      text: 'Just us on a sushiii date, eating, talking about everything and nothing, and making another little memory together. 🤍 never thought I’d find someone who’d make even the simplest little things feel this special, but somehow, with you, they do. and if forever means more sushiii dates, endless conversations, annoying you for the rest of our lives, and choosing each other through all of life’s little moments, then I think I’ve found my kind of forever. 🥹💍🍣❤️',
+      image: '/images/story-4.jpg',
+      width: 1600,
+      height: 900,
     },
   ],
 
-  // ── GALLERY — put photos in /public/images and list them here ──
-  // width/height are the image's proportions (prevents layout shift).
-  gallery: [
-    { src: '/images/gallery-1.svg', alt: 'Himani and Lovenish', width: 800, height: 1100 },
-    { src: '/images/gallery-2.svg', alt: 'A candid moment', width: 1200, height: 800 },
-    { src: '/images/gallery-3.svg', alt: 'Laughing together', width: 800, height: 1000 },
-    { src: '/images/gallery-4.svg', alt: 'Family celebrations', width: 1200, height: 900 },
-    { src: '/images/gallery-5.svg', alt: 'Hand in hand', width: 800, height: 1200 },
-    { src: '/images/gallery-6.svg', alt: 'The ring', width: 1000, height: 1000 },
-    { src: '/images/gallery-7.svg', alt: 'Jaipur memories', width: 1200, height: 800 },
-    { src: '/images/gallery-8.svg', alt: 'Together', width: 800, height: 1100 },
-  ],
+  // Optional: portraits that walk toward each other in the opening courtyard scene
+  // (groom from the left, bride from the right). Leave as null for the cartoon couple.
+  introPhotos: { groom: '/images/lovenish-intro.jpg', bride: '/images/himani-intro.jpg' },
+
+  // Optional: a portrait of the couple, shown as a 3D card at the top of the main page.
+  // Leave as null to show the names only.
+  couplePhoto: '/images/couple.jpg',
 
   // Optional: a photo/scan of the printed invitation, e.g. '/images/invitation.jpg'.
   // Leave as null to hide the "From Our Invitation" section.
@@ -194,14 +187,8 @@ const weddingData = {
   // Background music. Starts when the guest taps "Tap to open" (browsers block sound before a tap).
   // If the file is missing, the music button plays a soft generated tanpura drone instead.
   music: {
-    src: '/music/liggi.m4a', // compressed copy of liggi.mp3 (128 kbps AAC) for faster loading
-    title: 'Liggi — Ritviz',
-  },
-
-  closing: {
-    message: 'We can’t wait to celebrate\nwith you.',
-    signOff: 'With love,\nOur Families',
-    farewell: 'See You There',
+    src: '/music/jashn-e-bahaaraa.m4a', // 128 kbps AAC for faster loading
+    title: 'Jashn-E-Bahaaraa',
   },
 }
 

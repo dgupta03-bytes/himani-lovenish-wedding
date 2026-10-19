@@ -30,7 +30,14 @@ function StoryItem({ item, index }) {
         transition={{ duration: 1, ease }}
       >
         <div className="card-shadow mx-auto max-w-sm rounded-[3px] bg-white p-2.5 pb-8 md:mx-0">
-          <img src={item.image} alt={item.title} loading="lazy" width="600" height="450" className="aspect-[4/3] w-full rounded-[2px] object-cover" />
+          <img
+            src={item.image}
+            alt={item.title}
+            loading="lazy"
+            width={item.width}
+            height={item.height}
+            className={`w-full rounded-[2px] object-cover ${item.height > item.width ? 'aspect-[4/5] object-[50%_30%]' : 'aspect-[16/10]'}`}
+          />
         </div>
       </motion.figure>
 

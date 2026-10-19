@@ -32,13 +32,13 @@ function downloadCalendar() {
       `DTSTAMP:${toUTC(new Date())}`,
       `DTSTART:${toUTC(start)}`,
       `DTEND:${toUTC(end)}`,
-      `SUMMARY:${e.name} · ${weddingData.brideShort} & ${weddingData.groomShort}`,
+      `SUMMARY:${e.name} · ${weddingData.groomShort} & ${weddingData.brideShort}`,
       `LOCATION:${location.replace(/,/g, '\\,')}`,
       `DESCRIPTION:${e.description.replace(/,/g, '\\,')}`,
       'END:VEVENT',
     ].join('\r\n')
   })
-  const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Himani & Lovenish//Wedding//EN', ...events, 'END:VCALENDAR'].join('\r\n')
+  const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Lovenish & Himani//Wedding//EN', ...events, 'END:VCALENDAR'].join('\r\n')
   const url = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' }))
   const a = Object.assign(document.createElement('a'), { href: url, download: 'himani-lovenish-wedding.ics' })
   a.click()
