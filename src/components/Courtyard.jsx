@@ -288,46 +288,6 @@ function DriftingHearts({ show, delay }) {
   )
 }
 
-/* ── Lovebirds carrying a heart ──────────────────────────────────────── */
-function Bird({ x, color, wing, flip }) {
-  return (
-    <g transform={`translate(${x} 20) ${flip ? 'scale(-1 1)' : ''}`}>
-      <ellipse rx="13" ry="9" fill={color} />
-      <circle cx="11" cy="-6" r="7" fill={color} />
-      <path d="M17 -7 l7 2 -7 3 Z" fill="#E98A2C" />
-      <circle cx="13" cy="-8" r="1.4" fill={INK} />
-      <path d="M-12 0 l-9 -4 2 6 Z" fill={color} />
-      <motion.ellipse
-        cx="-1"
-        cy="-4"
-        rx="9"
-        ry="6"
-        fill={wing}
-        animate={{ scaleY: [1, -0.6, 1] }}
-        transition={{ duration: 0.45, repeat: Infinity, ease: 'easeInOut' }}
-        style={{ transformOrigin: '-1px 0px' }}
-      />
-    </g>
-  )
-}
-
-function LoveBirds() {
-  return (
-    <svg viewBox="-30 -10 160 60" className="h-full w-full overflow-visible" aria-hidden="true">
-      <path d="M12 26 Q50 50 88 26" fill="none" stroke="#c9a46a" strokeWidth="1.2" />
-      <motion.path
-        d="M50 40 c-6 -7 -15 -1 -9 7 l9 9 9 -9 c6 -8 -3 -14 -9 -7z"
-        fill="#e05469"
-        animate={{ scale: [1, 1.15, 1] }}
-        transition={{ duration: 0.9, repeat: Infinity }}
-        style={{ transformOrigin: '50px 46px' }}
-      />
-      <Bird x={10} color="#f6c1c8" wing="#ee9fae" />
-      <Bird x={90} color="#bfdcef" wing="#93c2e2" flip />
-    </svg>
-  )
-}
-
 const HEART = 'M12 21s-7.5-4.6-9.6-9.2C.9 8.5 3 4.5 6.8 4.5c2.2 0 3.7 1.3 5.2 3 1.5-1.7 3-3 5.2-3 3.8 0 5.9 4 4.4 7.3C19.5 16.4 12 21 12 21z'
 
 /* ── Scene ───────────────────────────────────────────────────────────── */
@@ -391,17 +351,6 @@ export default function Courtyard({ show, delay, onContinue }) {
           are getting married!
         </motion.p>
       </div>
-
-      {/* lovebirds fly across */}
-      <motion.div
-        className="absolute top-[37%] left-0 h-14 w-36"
-        initial={{ x: '-40vw', opacity: 0 }}
-        animate={show ? { x: ['-40vw', '30vw', '110vw'], y: [0, -20, -60], opacity: [1, 1, 1] } : {}}
-        transition={{ duration: 9, ...at(0.6), ease: 'easeInOut', times: [0, 0.45, 1] }}
-        aria-hidden="true"
-      >
-        <LoveBirds />
-      </motion.div>
 
       {art ? (
         <DriftingHearts show={show} delay={delay} />
