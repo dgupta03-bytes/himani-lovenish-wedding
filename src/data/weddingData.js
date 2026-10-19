@@ -172,9 +172,9 @@ const weddingData = {
     },
   ],
 
-  // Optional: portraits that walk toward each other in the opening courtyard scene
-  // (groom from the left, bride from the right). Leave as null for the cartoon couple.
-  introPhotos: { groom: '/images/lovenish-intro.jpg', bride: '/images/himani-intro.jpg' },
+  // Optional: an illustration of the couple (transparent background) for the opening
+  // courtyard scene, which then takes on a soft blush look. Leave as null for the drawn couple.
+  introCartoon: '/images/couple-cartoon.webp',
 
   // Optional: a portrait of the couple, shown as a 3D card at the top of the main page.
   // Leave as null to show the names only.

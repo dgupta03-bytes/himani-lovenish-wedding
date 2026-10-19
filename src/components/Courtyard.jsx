@@ -5,8 +5,9 @@ import weddingData from '../data/weddingData'
 
 /*
  * The scene behind the curtains: a garden courtyard with a fountain,
- * cypress trees, rose urns and the bride & groom (their photos if
- * weddingData.introPhotos is set, otherwise the cartoon couple).
+ * cypress trees, rose urns and a cartoon bride & groom. When
+ * weddingData.introCartoon is set, the scene turns soft blush watercolour
+ * and that illustration of the couple replaces the drawn figures.
  * `show` turns true when the curtains start parting; `delay` (s) is when
  * the scene's own animations should begin.
  */
@@ -210,77 +211,79 @@ function CoupleWalk({ show, delay, className }) {
   )
 }
 
-/* ── Photo couple (weddingData.introPhotos): walk in, meet, lean together ─ */
-function PhotoCard({ src, name, side, phase, off }) {
-  const sign = side === 'left' ? -1 : 1
-  const walking = phase === 'walk'
-  const together = phase === 'together'
+/* ── Illustrated couple (weddingData.introCartoon) ─────────────────── */
+const SPARKLES = [
+  [8, 30, 0], [88, 22, 0.7], [16, 62, 1.4], [92, 56, 2.1], [50, 6, 1], [30, 14, 2.6],
+]
+
+function Sparkle({ x, y, d, delay }) {
   return (
-    <motion.figure
-      className="relative"
-      initial={{ x: sign * off, opacity: 0 }}
-      animate={phase === 'wait' ? {} : { x: 0, opacity: 1, rotate: together ? -sign * 3 : 0 }}
-      transition={{ x: { duration: WALK, ease: [0.3, 0.1, 0.4, 1] }, opacity: { duration: 0.6 }, rotate: { duration: 0.9, ease: 'easeOut' } }}
-      style={{ transformOrigin: side === 'left' ? '100% 100%' : '0% 100%' }}
+    <motion.svg
+      viewBox="0 0 24 24"
+      className="absolute h-4 w-4 text-[#e8b86a]"
+      style={{ left: `${x}%`, top: `${y}%` }}
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity: [0, 1, 0], scale: [0.4, 1, 0.4], rotate: [0, 45] }}
+      transition={{ duration: 2.4, repeat: Infinity, delay: delay + d, ease: 'easeInOut' }}
+      aria-hidden="true"
     >
-      {/* gentle step bob while walking */}
-      <motion.div animate={walking ? { y: [0, -7, 0] } : { y: 0 }} transition={walking ? { duration: 0.55, repeat: Infinity, ease: 'easeInOut' } : { duration: 0.3 }}>
-        <div
-          className="overflow-hidden rounded-t-full border-[4px] border-[#e6cf9f] bg-[#f6eadb] p-1"
-          style={{ boxShadow: '0 0 0 1.5px #b8893b, 0 22px 40px -18px rgba(90,50,20,0.65)' }}
-        >
-          <img src={src} alt={name} width="720" height="960" className="block h-[min(40vh,58vw)] w-auto rounded-t-full object-cover" />
-        </div>
-        <figcaption className="mt-1.5 text-center font-script text-[clamp(1.3rem,5vw,1.9rem)] leading-none text-[#7a1a2b]">{name}</figcaption>
-      </motion.div>
-    </motion.figure>
+      <path d="M12 0 C13 8 16 11 24 12 C16 13 13 16 12 24 C11 16 8 13 0 12 C8 11 11 8 12 0Z" fill="currentColor" />
+    </motion.svg>
   )
 }
 
-function CouplePhotos({ show, delay }) {
-  const [phase, setPhase] = useState('wait')
-  const [off] = useState(() => (typeof window === 'undefined' ? 600 : window.innerWidth * 0.75))
-
-  useEffect(() => {
-    if (!show) return
-    const ms = delay * 1000
-    const t = [setTimeout(() => setPhase('walk'), ms), setTimeout(() => setPhase('together'), ms + WALK * 1000 + 200)]
-    return () => t.forEach(clearTimeout)
-  }, [show, delay])
-
+// Rises into place, softly focusing, then floats with a few twinkles around it
+function CoupleArt({ show, delay }) {
   return (
-    <div className="relative flex items-end gap-[min(1.5vw,10px)]">
-      <PhotoCard src={weddingData.introPhotos.groom} name={weddingData.groomShort} side="left" phase={phase} off={off} />
-      <PhotoCard src={weddingData.introPhotos.bride} name={weddingData.brideShort} side="right" phase={phase} off={off} />
-      {/* heart + sparkle burst between them once they meet */}
-      {phase === 'together' && (
-        <>
-          <motion.svg
-            viewBox="0 0 24 24"
-            className="absolute top-[38%] left-1/2 h-9 w-9 -translate-x-1/2 drop-shadow-[0_4px_8px_rgba(122,26,43,0.4)]"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: [0, 1.3, 1], opacity: 1 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
-            aria-hidden="true"
-          >
-            <path d={HEART} fill="#e05469" stroke="#fff" strokeWidth="1.2" />
-          </motion.svg>
-          {Array.from({ length: 10 }, (_, i) => {
-            const a = (Math.PI * 2 * i) / 10
-            return (
-              <motion.span
-                key={i}
-                className="absolute top-[42%] left-1/2 h-2 w-2 rounded-full"
-                style={{ background: i % 2 ? '#F2C14E' : '#e05469' }}
-                initial={{ x: 0, y: 0, opacity: 1 }}
-                animate={{ x: Math.cos(a) * 110, y: Math.sin(a) * 80, opacity: 0 }}
-                transition={{ duration: 1.2, ease: 'easeOut' }}
-                aria-hidden="true"
-              />
-            )
-          })}
-        </>
-      )}
+    <div className="relative">
+      <motion.div
+        className="absolute inset-x-[6%] top-[8%] bottom-[4%] rounded-full bg-white/70 blur-3xl"
+        initial={{ opacity: 0 }}
+        animate={show ? { opacity: 1 } : {}}
+        transition={{ duration: 2, delay }}
+        aria-hidden="true"
+      />
+      <motion.div
+        initial={{ opacity: 0, y: 50, scale: 0.9, filter: 'blur(10px)' }}
+        animate={show ? { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', transitionEnd: { filter: 'none' } } : {}}
+        transition={{ duration: 2, delay, ease: [0.2, 0.8, 0.2, 1] }}
+      >
+        <motion.img
+          src={weddingData.introCartoon}
+          alt={`${weddingData.groomShort} and ${weddingData.brideShort} in their wedding outfits`}
+          width="884"
+          height="900"
+          className="relative block h-[min(54vh,92vw)] w-auto"
+          animate={{ y: [0, -6, 0] }}
+          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: delay + 2 }}
+        />
+      </motion.div>
+      {show && SPARKLES.map(([x, y, d], i) => <Sparkle key={i} x={x} y={y} d={d} delay={delay + 1.6} />)}
+    </div>
+  )
+}
+
+// Soft watercolour hearts drifting up the whole scene
+const DRIFT = [
+  [6, 70, 26, 0], [18, 40, 16, 3], [80, 75, 22, 1.5], [92, 45, 14, 4.5], [70, 30, 12, 6], [28, 82, 12, 7.5], [60, 88, 18, 2.5], [40, 55, 10, 5.5],
+]
+
+function DriftingHearts({ show, delay }) {
+  return (
+    <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+      {DRIFT.map(([x, y, size, d], i) => (
+        <motion.svg
+          key={i}
+          viewBox="0 0 24 24"
+          className="absolute blur-[0.6px]"
+          style={{ left: `${x}%`, top: `${y}%`, width: size * 2, height: size * 2 }}
+          initial={{ opacity: 0 }}
+          animate={show ? { opacity: [0, 0.55, 0], y: [0, -160], x: [0, i % 2 ? 18 : -18] } : {}}
+          transition={{ duration: 9, repeat: Infinity, delay: delay + d, ease: 'easeOut' }}
+        >
+          <path d={HEART} fill={i % 3 ? '#f4b6c2' : '#ee9fb0'} />
+        </motion.svg>
+      ))}
     </div>
   )
 }
@@ -329,15 +332,28 @@ const HEART = 'M12 21s-7.5-4.6-9.6-9.2C.9 8.5 3 4.5 6.8 4.5c2.2 0 3.7 1.3 5.2 3 
 
 /* ── Scene ───────────────────────────────────────────────────────────── */
 export default function Courtyard({ show, delay, onContinue }) {
+  const art = weddingData.introCartoon
+  const coupleDone = art ? 2.4 : WALK + 2 // s after the couple starts, when hearts and the button appear
   const at = (d) => ({ delay: delay + d })
   const pop = (d) => ({ initial: { opacity: 0, y: 30 }, animate: show ? { opacity: 1, y: 0 } : {}, transition: { duration: 1.2, ease: [0.2, 0.8, 0.2, 1], ...at(d) } })
 
   return (
-    <div className="absolute inset-0 overflow-hidden" style={{ background: 'linear-gradient(180deg, #f7ecdf 0%, #f0dfca 58%, #e6cfb4 100%)' }}>
+    <div
+      className="absolute inset-0 overflow-hidden"
+      style={{
+        background: art
+          ? 'radial-gradient(ellipse at 50% 40%, #fff8f4 0%, #fcebe7 45%, #f5d6d1 100%)'
+          : 'linear-gradient(180deg, #f7ecdf 0%, #f0dfca 58%, #e6cfb4 100%)',
+      }}
+    >
       {/* arched window with a soft sunset sky */}
       <div
-        className="absolute top-[11%] left-1/2 h-[62%] w-[min(78vw,460px)] -translate-x-1/2 overflow-hidden rounded-t-full border-[7px] border-[#ead6bd]"
-        style={{ background: 'linear-gradient(180deg, #f9cdbd 0%, #fbe0cf 45%, #f6eadb 100%)', boxShadow: 'inset 0 0 40px rgba(170,110,80,0.25), 0 0 0 2px #d9c2a3' }}
+        className={`absolute top-[11%] left-1/2 h-[62%] w-[min(78vw,460px)] -translate-x-1/2 overflow-hidden rounded-t-full border-[7px] ${art ? 'border-[#f6dcd6]' : 'border-[#ead6bd]'}`}
+        style={
+          art
+            ? { background: 'linear-gradient(180deg, #fbd9d6 0%, #fde9e4 50%, #fff6f1 100%)', boxShadow: 'inset 0 0 40px rgba(220,140,150,0.2), 0 0 0 2px #efc6c0' }
+            : { background: 'linear-gradient(180deg, #f9cdbd 0%, #fbe0cf 45%, #f6eadb 100%)', boxShadow: 'inset 0 0 40px rgba(170,110,80,0.25), 0 0 0 2px #d9c2a3' }
+        }
         aria-hidden="true"
       >
         <div className="absolute bottom-[18%] left-1/2 h-24 w-24 -translate-x-1/2 rounded-full bg-[#fff1d6] opacity-80 blur-[2px]" />
@@ -356,8 +372,9 @@ export default function Courtyard({ show, delay, onContinue }) {
       <div
         className="absolute inset-x-0 bottom-0 h-[24%]"
         style={{
-          background:
-            'repeating-linear-gradient(90deg, rgba(160,125,90,0.18) 0 1px, transparent 1px 64px), linear-gradient(180deg, #e2cdb0 0%, #d4ba98 100%)',
+          background: art
+            ? 'linear-gradient(180deg, rgba(248,226,221,0) 0%, #f4d5cf 45%, #ecc1ba 100%)'
+            : 'repeating-linear-gradient(90deg, rgba(160,125,90,0.18) 0 1px, transparent 1px 64px), linear-gradient(180deg, #e2cdb0 0%, #d4ba98 100%)',
         }}
         aria-hidden="true"
       />
@@ -386,23 +403,29 @@ export default function Courtyard({ show, delay, onContinue }) {
         <LoveBirds />
       </motion.div>
 
-      {/* trees + urns */}
-      <motion.div {...pop(0)} className="absolute bottom-[8%]" style={{ left: 'max(1vw, calc(50% - 470px))' }}>
-        <CypressUrn className="h-[min(46vh,60vw)] w-auto" />
-      </motion.div>
-      <motion.div {...pop(0)} className="absolute bottom-[8%]" style={{ right: 'max(1vw, calc(50% - 470px))' }}>
-        <CypressUrn className="h-[min(46vh,60vw)] w-auto" flip />
-      </motion.div>
+      {art ? (
+        <DriftingHearts show={show} delay={delay} />
+      ) : (
+        <>
+          {/* trees + urns */}
+          <motion.div {...pop(0)} className="absolute bottom-[8%]" style={{ left: 'max(1vw, calc(50% - 470px))' }}>
+            <CypressUrn className="h-[min(46vh,60vw)] w-auto" />
+          </motion.div>
+          <motion.div {...pop(0)} className="absolute bottom-[8%]" style={{ right: 'max(1vw, calc(50% - 470px))' }}>
+            <CypressUrn className="h-[min(46vh,60vw)] w-auto" flip />
+          </motion.div>
 
-      {/* fountain */}
-      <motion.div {...pop(0.1)} className="absolute bottom-[9%] left-1/2 w-[min(100vw,600px)] -translate-x-1/2">
-        <Fountain className="h-auto w-full" />
-      </motion.div>
+          {/* fountain */}
+          <motion.div {...pop(0.1)} className="absolute bottom-[9%] left-1/2 w-[min(100vw,600px)] -translate-x-1/2">
+            <Fountain className="h-auto w-full" />
+          </motion.div>
+        </>
+      )}
 
       {/* couple */}
-      <div className={`absolute left-1/2 -translate-x-1/2 ${weddingData.introPhotos ? 'bottom-[10%]' : 'bottom-[5%]'}`}>
-        {weddingData.introPhotos ? (
-          <CouplePhotos show={show} delay={delay + 0.6} />
+      <div className={`absolute left-1/2 -translate-x-1/2 ${art ? 'bottom-[9%]' : 'bottom-[5%]'}`}>
+        {art ? (
+          <CoupleArt show={show} delay={delay + 0.6} />
         ) : (
           <motion.div animate={{ rotate: [-1, 1, -1] }} transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }} style={{ transformOrigin: '50% 100%' }}>
             <CoupleWalk show={show} delay={delay + 0.6} className="h-[min(42vh,100vw)] w-auto" />
@@ -413,11 +436,11 @@ export default function Courtyard({ show, delay, onContinue }) {
           <motion.svg
             key={i}
             viewBox="0 0 24 24"
-            className={`absolute left-1/2 h-5 w-5 ${weddingData.introPhotos ? 'top-[30%]' : 'top-[20%]'}`}
+            className={`absolute left-1/2 h-5 w-5 ${art ? 'top-[2%]' : 'top-[20%]'}`}
             style={{ marginLeft: (i - 2) * 14 - 10 }}
             initial={{ opacity: 0 }}
             animate={show ? { opacity: [0, 1, 0], y: [0, -90 - i * 12], x: [(i - 2) * 4, (i - 2) * 16] } : {}}
-            transition={{ duration: 3.2, repeat: Infinity, delay: delay + 0.6 + WALK + 2 + i * 0.6, ease: 'easeOut' }}
+            transition={{ duration: 3.2, repeat: Infinity, delay: delay + 0.6 + coupleDone + i * 0.6, ease: 'easeOut' }}
             aria-hidden="true"
           >
             <path d={HEART} fill={['#e05469', '#f29b9b', '#c0283f', '#f4c1bb', '#e05469'][i]} />
@@ -426,19 +449,23 @@ export default function Courtyard({ show, delay, onContinue }) {
       </div>
 
       {/* foreground roses */}
-      <motion.div {...pop(0.3)} className="absolute -bottom-[2%] -left-[6%] w-[min(50vw,340px)]">
-        <RoseBush className="h-auto w-full" />
-      </motion.div>
-      <motion.div {...pop(0.3)} className="absolute -right-[6%] -bottom-[2%] w-[min(50vw,340px)]">
-        <RoseBush className="h-auto w-full" flip />
-      </motion.div>
+      {!art && (
+        <>
+          <motion.div {...pop(0.3)} className="absolute -bottom-[2%] -left-[6%] w-[min(50vw,340px)]">
+            <RoseBush className="h-auto w-full" />
+          </motion.div>
+          <motion.div {...pop(0.3)} className="absolute -right-[6%] -bottom-[2%] w-[min(50vw,340px)]">
+            <RoseBush className="h-auto w-full" flip />
+          </motion.div>
+        </>
+      )}
 
       {/* continue */}
       <motion.div
         className="absolute inset-x-0 bottom-[3%] z-10 flex justify-center"
         initial={{ opacity: 0, y: 12 }}
         animate={show ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.8, ...at(0.6 + WALK + 2.2) }}
+        transition={{ duration: 0.8, ...at(0.6 + coupleDone + 0.2) }}
       >
         <button
           type="button"
